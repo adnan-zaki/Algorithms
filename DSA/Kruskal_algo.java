@@ -24,10 +24,6 @@ public class Kruskal_algo extends JFrame {
     private JPanel mainPanel;
     private JTextArea consoleOutput;
 
-    // For non-graphical
-    private int[][] cost;
-    private int[] parent;
-    private int n;
 
     // For graphical
     private java.util.List<Edge> edges;
@@ -409,18 +405,6 @@ class NonGraphPanel extends JPanel {
 }
 
 
-    private int find(int i) {
-        while (parent[i] != 0) i = parent[i];
-        return i;
-    }
-
-    private boolean uni(int i, int j) {
-        if (i != j) {
-            parent[j] = i;
-            return true;
-        }
-        return false;
-    }
 
     // ----------------- Graphical Kruskal -----------------
     private void runGraphical() {
