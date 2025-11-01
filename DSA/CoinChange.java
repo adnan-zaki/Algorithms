@@ -1,19 +1,19 @@
-import java.util.Scanner;
-import java.util.Arrays;
-
+// 🪙 Coin Change Problem using Dynamic Programming
 public class CoinChange {
 
-    // Method to calculate the minimum number of coins required to make the given amount
-    public int coinChange(int[] coins, int amount) {
+    // Function to find the fewest number of coins needed to make up the given amount
+    public static int coinChange(int[] coins, int amount) {
         int[] dp = new int[amount + 1];
-        dp[0] = 0;
 
-        // Initialize dp array with a value larger than the amount (representing infinity)
+        // Fill dp array with a large value (unreachable state)
         for (int i = 1; i <= amount; i++) {
-            dp[i] = amount + 1; // Larger than the maximum possible number of coins
+            dp[i] = amount + 1;
         }
 
-        // Loop to calculate the minimum coins for each amount
+        // Base case: 0 coins needed to make amount 0
+        dp[0] = 0;
+
+        // Compute dp[i] for all amounts up to the target
         for (int i = 1; i <= amount; i++) {
             for (int coin : coins) {
                 if (coin <= i) {
@@ -22,42 +22,15 @@ public class CoinChange {
             }
         }
 
-        // If dp[amount] is still larger than the amount, it means it's impossible to form the amount
-        return dp[amount] > amount ? -1 : dp[amount];
+        // If dp[amount] is still large, it means amount can't be made up
+        return (dp[amount] > amount) ? -1 : dp[amount];
     }
 
+    // 🔍 Test cases
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        // Prompt user for the coins array
-        System.out.println("Input:");
-        System.out.print("coins: ");
-        String coinsInput = scanner.nextLine().trim();
-
-        // Remove unnecessary characters and split the input into individual coin values
-        coinsInput = coinsInput.replaceAll("[\\[\\] ]", "");
-        String[] coinStrings = coinsInput.split(",");
-
-        // Convert the coin strings to integers
-        int[] coins = new int[coinStrings.length];
-        for (int i = 0; i < coinStrings.length; i++) {
-            coins[i] = Integer.parseInt(coinStrings[i].trim());
-        }
-
-        // Prompt user for the amount
-        System.out.print("amount: ");
-        int amount = scanner.nextInt();
-
-        // Call the coinChange method to calculate the result
-        CoinChange solution = new CoinChange();
-        int result = solution.coinChange(coins, amount);
-
-        // Print the result as output
-        System.out.println();
-        System.out.println("Output:");
-        System.out.println(result);
-
-        // Close the scanner to avoid resource leak
-        scanner.close();
+        System.out.println("Output: " + coinChange(new int[]{1, 2, 5}, 11)); // 3
+        System.out.println("Output: " + coinChange(new int[]{2}, 3));        // -1
+        System.out.println("Output: " + coinChange(new int[]{1}, 0));        // 0
+        System.out.println("Output: " + coinChange(new int[]{186,419,83,408}, 6249)); // 20
     }
 }
